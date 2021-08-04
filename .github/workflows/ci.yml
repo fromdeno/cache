@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: npm ci --ignore-scripts
+    - run: npm run --silent prepare
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: denoland/setup-deno@v1
+    - uses: actions/checkout@v2
+    - run: npm run --silent fmt -- --check
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: denoland/setup-deno@v1
+    - uses: actions/checkout@v2
+    - run: npm run --silent lint
+
+  test:
+    strategy:
+      matrix:
+        os:
+        - macos-latest
+        - ubuntu-latest
+        - windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: denoland/setup-deno@v1
+    - uses: actions/checkout@v2
+    - run: npm run --silent test

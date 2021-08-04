@@ -1,0 +1,44 @@
+{
+  "name": "@fromdeno/cache",
+  "version": "0.0.0",
+  "description": "Read from (and write to) Deno cache.",
+  "type": "module",
+  "main": "./lib/mod.js",
+  "exports": "./lib/mod.js",
+  "typings": "./lib/mod.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "src/**/*.ts",
+    "lib/"
+  ],
+  "scripts": {
+    "prepare": "deno2node tsconfig.json",
+    "clean": "git clean -fXde '!node_modules/'",
+    "fmt": "deno fmt --ignore=lib/,node_modules/",
+    "lint": "deno lint --ignore=lib/,node_modules/",
+    "test": "deno test --allow-read --allow-env test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fromdeno/cache.git"
+  },
+  "homepage": "https://fromdeno.org",
+  "keywords": [
+    "deno",
+    "cache"
+  ],
+  "author": "Wojciech Pawlik <woj.pawlik@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fromdeno/cache/issues"
+  },
+  "engines": {
+    "node": ">=14.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.10",
+    "deno2node": "^0.8.0"
+  }
+}
