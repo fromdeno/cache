@@ -1,7 +1,7 @@
 {
   "name": "@fromdeno/cache",
-  "version": "0.0.0",
-  "description": "Read from (and write to) Deno cache.",
+  "version": "0.1.0",
+  "description": "Simple API for Deno cache.",
   "type": "module",
   "main": "./lib/mod.js",
   "exports": "./lib/mod.js",
