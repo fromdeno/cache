@@ -14,6 +14,10 @@ headers.append("Accept", "application/node");
 headers.append("Accept", "text/jsx");
 headers.append("Accept", "text/tsx");
 
+/**
+ * If `Response` isn't cached, performs the request and caches `Response`.
+ * @permissions `--allow-net --allow-write --allow-read --allow-env`
+ */
 export async function fetchCache(url: string | URL): Promise<Response> {
   const entry = new CacheEntry(url);
   try {
