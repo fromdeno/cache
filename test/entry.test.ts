@@ -1,10 +1,16 @@
-import { assertEquals } from "https://deno.land/std@0.97.0/testing/asserts.ts";
+import { assertEquals, cacheHitUrl } from "./shared.ts";
 import { CacheEntry } from "../src/entry.ts";
 
-Deno.test("cache.entry() locates cached files", async () => {
-  const url = new URL("https://deno.land/std@0.97.0/testing/asserts.ts");
-  const entry = new CacheEntry(url);
-  assertEquals(entry.url, url);
+Deno.test("CacheEntry -- string hit", async () => {
+  const entry = new CacheEntry(cacheHitUrl.href);
+  assertEquals(entry.url, cacheHitUrl);
+  await Deno.stat(entry.metaPath);
+  await Deno.stat(entry.path);
+});
+
+Deno.test("CacheEntry -- URL hit", async () => {
+  const entry = new CacheEntry(cacheHitUrl);
+  assertEquals(entry.url, cacheHitUrl);
   await Deno.stat(entry.metaPath);
   await Deno.stat(entry.path);
 });

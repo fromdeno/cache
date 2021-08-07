@@ -15,7 +15,9 @@ export class CacheEntry {
   constructor(url: string | URL) {
     this.url = new URL(String(url));
     this.hash = sha256(
-      url.search ? `${this.url.pathname}?${url.search}` : this.url.pathname,
+      this.url.search
+        ? `${this.url.pathname}?${this.url.search}`
+        : this.url.pathname,
     );
     this.path = Path.resolve(
       getCacheDir(),
