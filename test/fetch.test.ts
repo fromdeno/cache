@@ -22,3 +22,18 @@ Deno.test("fetchCache -- miss", async () => {
     Deno.errors.PermissionDenied,
   );
 });
+
+Deno.test("fetchCache -- abort", async () => {
+  const abortController = new AbortController();
+  abortController.abort();
+  await assertThrowsAsync(
+    () => fetchCache(cacheHitUrl, { signal: abortController.signal }),
+    DOMException,
+    "The read operation was aborted",
+  );
+  await assertThrowsAsync(
+    () => fetchCache(cacheMissUrl, { signal: abortController.signal }),
+    DOMException,
+    "Ongoing fetch was aborted.",
+  );
+});

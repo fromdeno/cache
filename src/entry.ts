@@ -38,10 +38,10 @@ export class CacheEntry {
    * @returns cached `Response` on success.
    * @throws `Deno.errors.NotFound` when the URL isn't cached.
    */
-  async read(): Promise<Response> {
+  async read(options?: Deno.ReadFileOptions): Promise<Response> {
     const [body, meta] = await Promise.all([
-      Deno.readFile(this.path),
-      Deno.readTextFile(this.metaPath).then(JSON.parse),
+      Deno.readFile(this.path, options),
+      Deno.readTextFile(this.metaPath, options).then(JSON.parse),
     ]);
     const headers = new Headers(meta.headers);
     return new Response(body, { headers });

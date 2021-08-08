@@ -19,3 +19,13 @@ Deno.test("readCache -- URL hit", async () => {
 Deno.test("readCache -- miss", async () => {
   await assertThrowsAsync(() => readCache(cacheMissUrl), Deno.errors.NotFound);
 });
+
+Deno.test("readCache -- abort", async () => {
+  const abortController = new AbortController();
+  abortController.abort();
+  await assertThrowsAsync(
+    () => readCache(cacheHitUrl, { signal: abortController.signal }),
+    DOMException,
+    "The read operation was aborted",
+  );
+});

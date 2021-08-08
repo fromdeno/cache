@@ -18,14 +18,17 @@ headers.append("Accept", "text/tsx");
  * If `Response` isn't cached, performs the request and caches `Response`.
  * @permissions `--allow-net --allow-write --allow-read --allow-env`
  */
-export async function fetchCache(url: string | URL): Promise<Response> {
+export async function fetchCache(
+  url: string | URL,
+  { signal }: Deno.ReadFileOptions = {},
+): Promise<Response> {
   const entry = new CacheEntry(url);
   try {
-    return await entry.read();
+    return await entry.read({ signal });
   } catch (error: unknown) {
     if (!(error instanceof Deno.errors.NotFound)) throw error;
   }
-  const res = await fetch(url, { headers });
+  const res = await fetch(url, { headers, signal });
   if (res.status === 200) await entry.write(res.clone());
   return res;
 }
