@@ -13,19 +13,13 @@ jobs:
     - run: npm ci --ignore-scripts
     - run: npm run --silent prepare
 
-  fmt:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: denoland/setup-deno@v1
-    - uses: actions/checkout@v2
-    - run: npm run --silent fmt -- --check
-
   lint:
     runs-on: ubuntu-latest
     steps:
     - uses: denoland/setup-deno@v1
     - uses: actions/checkout@v2
-    - run: npm run --silent lint
+    - run: deno lint
+    - run: deno fmt --check
 
   test:
     strategy:
