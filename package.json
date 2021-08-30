@@ -3,21 +3,24 @@
   "version": "0.1.5",
   "description": "Simple API for Deno cache.",
   "type": "module",
-  "main": "./lib/mod.js",
-  "exports": "./lib/mod.js",
-  "typings": "./lib/mod.d.ts",
+  "main": "./out/src/mod.js",
+  "exports": "./out/src/mod.js",
+  "typings": "./out/src/mod.d.ts",
+  "bin": {
+    "dtest": "node/dtest.mjs"
+  },
   "directories": {
-    "lib": "lib"
+    "lib": "out/src/"
   },
   "files": [
     "src/**/*.ts",
-    "lib/"
+    "out/src/"
   ],
   "scripts": {
     "prepare": "deno2node tsconfig.json",
-    "clean": "git clean -fXde '!node_modules/'",
-    "fmt": "deno fmt --ignore=lib/,node_modules/",
-    "lint": "deno lint --ignore=lib/,node_modules/",
+    "clean": "git clean -fXde !node_modules/",
+    "fmt": "deno fmt --ignore=out/,node_modules/",
+    "lint": "deno lint --ignore=out/,node_modules/",
     "test": "deno test --allow-read --allow-env test/"
   },
   "repository": {
@@ -38,7 +41,7 @@
     "node": ">=14.13.1"
   },
   "dependencies": {
-    "deno.ns": "^0.4.0"
+    "deno.ns": "^0.4.2"
   },
   "devDependencies": {
     "@types/node": "^16.4.10",

@@ -6,13 +6,6 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - run: npm ci --ignore-scripts
-    - run: npm run --silent prepare
-
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -32,4 +25,10 @@ jobs:
     steps:
     - uses: denoland/setup-deno@v1
     - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 16
     - run: npm run --silent test
+    - run: npm ci  --ignore-scripts
+    - run: npm run --silent prepare
+    - run: node/dtest.mjs out/test/*.test.js

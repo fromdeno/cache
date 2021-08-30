@@ -1,6 +1,7 @@
 {
-  "include": ["src/"],
+  "include": ["src/", "test/"],
   "deno2node": {
+    "vendorDir": ".deno2node/vendor/", // for std/testing/assert.ts used in test/
     "shim": "src/shim.node.ts"
   },
   "compilerOptions": {
@@ -9,7 +10,7 @@
     "declarationMap": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "outDir": "lib/",
+    "outDir": "out/",
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2020"

@@ -1,4 +1,5 @@
 import {
+  assert,
   assertEquals,
   assertThrowsAsync,
   cacheHitUrl,
@@ -6,21 +7,29 @@ import {
 } from "./shared.ts";
 import { fetchCache } from "../src/fetch.ts";
 
+const inNodeJs = "global" in globalThis;
+
 Deno.test("fetchCache -- string hit", async () => {
   const res = await fetchCache(cacheHitUrl.href);
+  assert(res.headers.has("Content-Type"));
   assertEquals(res.status, 200);
 });
 
 Deno.test("fetchCache -- URL hit", async () => {
   const res = await fetchCache(cacheHitUrl);
+  assert(res.headers.has("Content-Type"));
   assertEquals(res.status, 200);
 });
 
-Deno.test("fetchCache -- miss", async () => {
-  await assertThrowsAsync(
-    () => fetchCache(cacheMissUrl),
-    Deno.errors.PermissionDenied,
-  );
+Deno.test({
+  name: "fetchCache -- miss",
+  ignore: inNodeJs,
+  fn: async () => {
+    await assertThrowsAsync(
+      () => fetchCache(cacheMissUrl),
+      Deno.errors.PermissionDenied,
+    );
+  },
 });
 
 Deno.test("fetchCache -- abort", async () => {
@@ -28,12 +37,12 @@ Deno.test("fetchCache -- abort", async () => {
   abortController.abort();
   await assertThrowsAsync(
     () => fetchCache(cacheHitUrl, { signal: abortController.signal }),
-    DOMException,
-    "The read operation was aborted",
+    undefined,
+    "operation was aborted",
   );
   await assertThrowsAsync(
     () => fetchCache(cacheMissUrl, { signal: abortController.signal }),
-    DOMException,
-    "Ongoing fetch was aborted.",
+    undefined,
+    "was aborted",
   );
 });

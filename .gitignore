@@ -1,3 +1,4 @@
 /fromdeno-cache-*.tgz
 /node_modules/
 /lib/
+/out/

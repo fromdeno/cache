@@ -1,4 +1,5 @@
 import {
+  assert,
   assertEquals,
   assertThrowsAsync,
   cacheHitUrl,
@@ -8,11 +9,13 @@ import { readCache } from "../src/read.ts";
 
 Deno.test("readCache -- string hit", async () => {
   const res = await readCache(cacheHitUrl.href);
+  assert(res.headers.has("Content-Type"));
   assertEquals(res.status, 200);
 });
 
 Deno.test("readCache -- URL hit", async () => {
   const res = await readCache(cacheHitUrl);
+  assert(res.headers.has("Content-Type"));
   assertEquals(res.status, 200);
 });
 
@@ -25,7 +28,7 @@ Deno.test("readCache -- abort", async () => {
   abortController.abort();
   await assertThrowsAsync(
     () => readCache(cacheHitUrl, { signal: abortController.signal }),
-    DOMException,
-    "The read operation was aborted",
+    undefined,
+    "operation was aborted",
   );
 });
