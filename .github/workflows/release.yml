@@ -10,8 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - run: rm -rf test/
     - run: npm ci --ignore-scripts
-    - run: npm run prepare
+    - run: npm run --silent prepare
     - name: Publish to npm
       run: |
         npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}

@@ -5,7 +5,7 @@ export class CacheEntry {
   /** Input URL */
   readonly url: Readonly<URL>;
   readonly hash: string;
-  /** Path where the `Response` body is (or would be) cached. */
+  /** Path where the response body is (or would be) cached. */
   readonly path: string;
   /**
    * Calculates where a gives URL is (or would be) cached.
@@ -28,7 +28,7 @@ export class CacheEntry {
     );
   }
 
-  /** Path where the `Response` `headers` are (or would be) cached. */
+  /** Path where the response headers are (or would be) cached. */
   get metaPath(): string {
     return `${this.path}.metadata.json`;
   }
@@ -39,11 +39,10 @@ export class CacheEntry {
    * @throws `Deno.errors.NotFound` when the URL isn't cached.
    */
   async read(options?: Deno.ReadFileOptions): Promise<Response> {
-    const [body, meta] = await Promise.all([
+    const [body, { headers }] = await Promise.all([
       Deno.readFile(this.path, options),
       Deno.readTextFile(this.metaPath, options).then(JSON.parse),
     ]);
-    const headers = new Headers(meta.headers);
     return new Response(body, { headers });
   }
 
