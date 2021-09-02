@@ -6,6 +6,7 @@ Deno.test("CacheEntry -- string hit", async () => {
   assertMatch(entry.hash, /^[0-9a-f]{64}$/);
   assertEquals(entry.url, cacheHitUrl);
   await Deno.stat(entry.metaPath);
+  await Deno.stat(entry.jsPath);
   await Deno.stat(entry.path);
 });
 
@@ -14,5 +15,6 @@ Deno.test("CacheEntry -- URL hit", async () => {
   assertMatch(entry.hash, /^[0-9a-f]{64}$/);
   assertEquals(entry.url, cacheHitUrl);
   await Deno.stat(entry.metaPath);
+  await Deno.stat(entry.jsPath);
   await Deno.stat(entry.path);
 });

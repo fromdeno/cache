@@ -37,5 +37,5 @@ export function getCacheDir(): string {
   }
 
   if (!home) return ".deno";
-  return Path.join(home, path);
+  return Path.resolve(home, path);
 }

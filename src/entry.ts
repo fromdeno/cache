@@ -7,6 +7,8 @@ export class CacheEntry {
   readonly hash: string;
   /** Path where the response body is (or would be) cached. */
   readonly path: string;
+  /** Path where the compiled JS is (or would be) cached. */
+  readonly jsPath: string;
   /**
    * Calculates where a gives URL is (or would be) cached.
    * Performs no IO.
@@ -19,12 +21,19 @@ export class CacheEntry {
         ? `${this.url.pathname}?${this.url.search}`
         : this.url.pathname,
     );
-    this.path = Path.resolve(
+    this.path = Path.join(
       getCacheDir(),
       "deps/",
       this.url.protocol.slice(0, -1),
       this.url.hostname,
       this.hash,
+    );
+    this.jsPath = Path.join(
+      getCacheDir(),
+      "gen/",
+      this.url.protocol.slice(0, -1),
+      this.url.hostname,
+      this.hash + ".js",
     );
   }
 
