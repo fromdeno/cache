@@ -11,10 +11,7 @@
  * $ dtest <testFiles>
  * ```
  *
- * Lives here for ease of dogfooding.
- * Feel free to turn it into a separate package, to add more functionality.
- * Name and license it however you want.
- * Just please put "@wojpawlik" in the initial commit to notify me.
+ * @deprecated in favor of https://npm.im/@fromdeno/test
  */
 
 import { pathToFileURL } from "url";
@@ -71,3 +68,7 @@ ${failures.length} failed; \
 ${stats.ignored} ignored \
 \x1b[90m(${performance.now().toFixed(0)}ms)\x1b[0m
 `);
+
+process.stderr.write(
+  "⚠ dtest is deprecated in favor of https://npm.im/@fromdeno/test\n",
+);
