@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "prepare": "deno2node tsconfig.json",
+    "postprepare": "globstar fdt out/test/*.test.js",
     "clean": "git clean -fXde !node_modules/",
     "fmt": "deno fmt --ignore=out/,node_modules/",
     "lint": "deno lint --ignore=out/,node_modules/",
@@ -41,10 +42,11 @@
     "node": ">=14.13.1"
   },
   "dependencies": {
-    "deno.ns": "^0.4.2"
+    "deno.ns": "^0.4.3"
   },
   "devDependencies": {
     "@types/node": "^16.4.10",
-    "deno2node": "^0.8.0"
+    "deno2node": "^0.8.0",
+    "globstar": "^1.0.0"
   }
 }

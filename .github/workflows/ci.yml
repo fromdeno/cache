@@ -31,4 +31,3 @@ jobs:
     - run: npm run --silent test
     - run: npm ci  --ignore-scripts
     - run: npm run --silent prepare
-    - run: node/dtest.mjs out/test/*.test.js
