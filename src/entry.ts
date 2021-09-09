@@ -48,6 +48,7 @@ export class CacheEntry {
    * @throws `Deno.errors.NotFound` when the URL isn't cached.
    */
   async read(options?: Deno.ReadFileOptions): Promise<Response> {
+    await Deno.permissions.request({ name: "read", path: getCacheDir() });
     const [body, { headers }] = await Promise.all([
       Deno.readFile(this.path, options),
       Deno.readTextFile(this.metaPath, options).then(JSON.parse),
@@ -60,6 +61,7 @@ export class CacheEntry {
    * @permissions `--allow-write`
    */
   async write(res: Response): Promise<void> {
+    await Deno.permissions.request({ name: "write", path: getCacheDir() });
     const body = new Uint8Array(await res.arrayBuffer());
     const meta = { headers: Object.fromEntries(res.headers), url: this.url };
     const metaText = JSON.stringify(meta, undefined, 2);
